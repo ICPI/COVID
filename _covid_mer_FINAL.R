@@ -1,3 +1,17 @@
+# Script pulls in various COVID related data streams and integrates them with MER data
+# Data streams include:
+# MER (DATIM)
+# MER Narratives (DATIM)
+# COVID cases and deaths (WHO|JHU)
+# COVID mitigation measures (WHO)
+# COVID stringency index (Oxford)
+# Latitude and Longitude data for PEPFAR facilites (DATIM)
+#
+# Script developed by: Imran Mujawar (lrz5@cdc.gov)
+# Date: 03/16/2021
+
+
+
 # Code to Merge MER data with COVID time series 
 
 ldpkg <- dget("ldpkg.R")
