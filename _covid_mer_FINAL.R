@@ -376,21 +376,9 @@ base_q4 <- dplyr::bind_rows(baselistq4)
 mer_ou <- bind_rows(mer, base_q2, base_q1,
   base_q3, base_q4)
 
-# 
-# testx <- mer_ou %>% 
-#   filter(fiscal_yr_period %in% c("2019q4_baseline", "2020q1_baseline")) %>% 
-#   group_by(indicatorx, fiscal_yr_period, Date) %>% 
-#   summarise(val = sum(value, na.rm=T)) %>% 
-#   ungroup()
-
 return(mer_ou) }
 
-oufilesx <- oufiles[c(3, 19, 9, 16)]
-
-
 oufilesx <- oufiles
-
-
 
 # Getting data for all the OUs at site-level
 merdf <- purrr::map(.x = oufilesx, .f = ~mer_pull(.x))
@@ -913,20 +901,7 @@ cat4_range <- xdfx$valx[ xdfx$valx >= q6[4] &  xdfx$valx < q6[5]]
 cat5_range <- xdfx$valx[ xdfx$valx >= q6[5] &  xdfx$valx < q6[6]]
 cat6_range <- xdfx$valx[ xdfx$valx >= q6[6]] 
 
-# Creating legend upper and lower ranges
-# cat1_up <- max(cat1_range, na.rm = T)
-#   cat1_2diff <- min(cat2_range, na.rm = T)-cat1_up
-# cat2_lw <- cat1_up + (1/(10^decimalplaces(cat1_2diff)))
-# cat2_up <- max(cat2_range, na.rm = T)
-#   cat2_3diff <- min(cat3_range, na.rm = T)-cat2_up
-# cat3_lw <- cat2_up + (1/(10^decimalplaces(cat2_3diff)))
-# cat3_up <- max(cat3_range, na.rm = T)
-#   cat3_4diff <- min(cat4_range, na.rm = T)-cat3_up
-# cat4_lw <- cat3_up + (1/(10^decimalplaces(cat3_4diff)))
-# cat4_up <- max(cat4_range, na.rm = T)
-#   cat4_5diff <- min(cat5_range, na.rm = T)-cat4_up
-# cat5_lw <- cat4_up + (1/(10^decimalplaces(cat4_5diff)))
-
+  
 cat2_lw <- min(cat2_range, na.rm = T)
 cat3_lw <- min(cat3_range, na.rm = T)
 cat4_lw <- min(cat4_range, na.rm = T)
@@ -1123,38 +1098,6 @@ write_tsv(ndf, paste0(outdir,"Narratives.txt"),na="")
 write_tsv(ndfx, paste0(outdir,"COVID_narr.txt"),na="")
 
 
-# itfpathx <- paste0("C:/Users/",
-#   Sys.getenv("USERNAME"),
-#   "/CDC/ITF-COVID19 International Task Force - CDC ITF/")
-# 
-# # Reading in the ITF Mitigation data 
-# itfpath <- ifelse(dir.exists(itfpathx),
-#                   itfpathx,
-#                   "Directory does not exist")
-# 
-# itf <- read.csv(paste0(itfpath, "CDC ITF Mitigation Tracker.csv"))
-# 
-# itf1 <- itf %>% 
-#   dplyr::rename(iso3code = ISO.Code.3) %>% 
-#   filter(iso3code %in% unique(mer1$country_code)) %>% 
-#   mutate(Action.taken = gsub("^\\s+|\\s+$", "", Action.taken)) %>% 
-#   mutate(Action.taken = if_else(Action.taken %in% c("Extend with same stringency"),
-#     "Extend", Action.taken)) %>% 
-#   mutate(date_ou_match = paste0(iso3code, "_", Date.implemented.or.lifted)) %>% 
-#   mutate(action_num = case_when(
-#     Action.taken %in% c("Impose") ~ "n1",
-#     Action.taken %in% c("Extend") ~ "n2",
-#     Action.taken %in% c("Strengthen") ~ "n3",
-#     Action.taken %in% c("Ease") ~ "n4",
-#     Action.taken %in% c("Lift") ~ "n5"
-#   ))
-# 
-# # itf1x <- left_join(date_ou_frame, itf1)
-# 
-# 
-# write_tsv(itf1, paste0(outdir,"ITF_mitigation.txt"),na="")
-
-
 # Getting the stringency index data
 strx <- read.csv("https://raw.githubusercontent.com/OxCGRT/covid-policy-tracker/master/data/timeseries/stringency_index.csv")
   
@@ -1178,11 +1121,6 @@ write_tsv(strx1, paste0(outdir,"stringency.txt"),na="")
 strx2 <- strx1 %>% 
     mutate(date_ou_match = paste0(country_code, "_", date)) %>% 
     select(-date)
-
-# 
-# strmit <- left_join(itf1, strx2)
-# 
-# write_tsv(strmit, paste0(outdir,"mitigation_stringency.txt"),na="")
 
 
 # Reading in the WHO mitigation data
